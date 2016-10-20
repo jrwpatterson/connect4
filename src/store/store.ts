@@ -9,3 +9,8 @@ export interface Store {
     turn: Token;
     winner?: Token;
 }
+
+export interface IMemRowObj{
+    token: Token;
+    count: number;
+}
