@@ -73,13 +73,14 @@ function getDiagonalToken(flippedGameBoard: Token[][]): any {
 }
 
 function getVertical(flippedGameBoard: Token[][]):Token{
+    let winningToken: Token;
     flippedGameBoard.forEach(row => {
         let count = 0;
         let lastToken = row[0];
         row.forEach(quickToken => {
-            if (quickToken !== Token.Empty && quickToken === lastToken) {
+            if (!winningToken && quickToken !== Token.Empty && quickToken === lastToken) {
                 if (count === 3) {
-                    return quickToken;
+                    winningToken = quickToken;
                 } else {
                     count++;
                 }
@@ -89,7 +90,7 @@ function getVertical(flippedGameBoard: Token[][]):Token{
             lastToken = quickToken;
         });
     });
-    return null
+    return winningToken
 }
 
 export default function* game(): any {
