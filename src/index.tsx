@@ -10,7 +10,6 @@ import Index from "views";
 import App from "./App";
 
 const rootElement = document.getElementById("main");
-// ReactDOM.render(<AppContainer><App /></AppContainer>, rootElement);
 
 const store = configureStore();
 if ((module as any).hot) {
@@ -22,7 +21,6 @@ if ((module as any).hot) {
 
 browserHistory.listen(
     ()=>{
-        console.log(store);
         store.dispatch(urlChange())}
 )
 

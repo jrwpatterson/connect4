@@ -16,7 +16,6 @@ export interface GameOverAction {
     type: "GAME_OVER";
     winner: Token;
 }
-
 export interface UrlChangeAction{
     type: "URL_Change";
 }
