@@ -18,8 +18,7 @@ import {
 
 
 function getWinner(gameBoard: Token[][]): Token {
-
-    let winnerToken: Token;
+    let winnerToken: Token = null;
 
     const verticalWinner = _.chain(gameBoard)
         .filter(g => _.uniq(g).length === 1 && g[0] !== Token.Empty)
@@ -47,11 +46,12 @@ function getWinner(gameBoard: Token[][]): Token {
     }
 
     if (!winnerToken && isDraw(flippedGameBoardPreZipp)) {
-        return Token.Empty;
+        winnerToken = Token.Empty;
     }
-//return Token.Empty; 
 
     if (winnerToken) {
+        window.history.pushState(null, null, "/" + JSON.stringify(gameBoard)
+                + "/" + 1 + "/" + winnerToken)
         return winnerToken;
     }
 
@@ -59,7 +59,7 @@ function getWinner(gameBoard: Token[][]): Token {
 }
 
 function isDraw(grid: Token[][]) {
-    return !grid.some(g=> g.find(a=>a===Token.Empty)>-1)
+    return !grid.some(g => g.find(a => a === Token.Empty) > -1);
 }
 
 function getDiagonalToken(flippedGameBoard: Token[][], reverse = false): any {
@@ -106,7 +106,7 @@ export default function* game(): any {
     while (yield take(PLACE_TOKEN)) {
         const gameBoard = yield select < Store > (s => s.gameBoard);
         const winner = getWinner(gameBoard);
-        if (winner!==null && winner>-1) {
+        if (winner !==null && winner > -1) {
             yield put(gameOver(winner));
             break;
         }

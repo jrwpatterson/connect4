@@ -18,7 +18,7 @@ const coloredMessage = (token: Token) =>
     <span><span style={{ color: colors[token] }}>{players[token]}</span> wins!</span>;
 
 const GameOver = (props: GameOverProps) => {
-    if (props.winner === null) {
+    if (props.winner === null || props.winner===undefined || props.winner.toString().length==0) {
         return null;
     }
 

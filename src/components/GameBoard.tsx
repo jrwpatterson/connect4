@@ -1,8 +1,8 @@
 import * as _ from "lodash";
 import * as React from "react";
 import {Dispatch, connect} from "react-redux";
-
-import {placeToken} from "actions/game";
+import {Router, } from "react-router";
+import {placeToken,UrlChangeAction} from "actions/game";
 import colors from "colors";
 import {Store, Token} from "store/store";
 
@@ -13,6 +13,7 @@ interface GameBoardProps {
 }
 
 const GameBoard = (props: GameBoardProps) => {
+        console.log(Router.prototype)
     const flippedGameBoard = _.reverse(_.zip.apply(_, props.gameBoard));
 
     const canPlaceToken = (col: number) => _.some(props.gameBoard[col], g => g === Token.Empty);
