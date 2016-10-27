@@ -4,12 +4,23 @@ export enum Token {
     Yellow
 }
 
-export interface Store {
-    game?: any;
+export interface GameStore{
     gameBoard: Token[][];
     turn: Token;
     winner?: Token;
 }
+
+export interface TimerStore{
+    count: number;
+    message: string;
+}
+
+export interface Store {
+    game?: GameStore,
+    timer?: TimerStore
+}
+
+
 
 export interface IMemRowObj{
     token: Token;

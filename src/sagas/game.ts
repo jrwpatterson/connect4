@@ -24,7 +24,7 @@ function getWinner(gameBoard: Token[][]): Token {
         .value();
 
     if (verticalWinner.length) {
-        return verticalWinner[0];
+        winnerToken = verticalWinner[0];
     }
 
     let flippedGameBoardPreZipp: Token[][] = _.cloneDeep(gameBoard);
@@ -47,9 +47,11 @@ function getWinner(gameBoard: Token[][]): Token {
         winnerToken = Token.Empty;
     }
 
-    if (winnerToken) {
-        window.history.pushState(null, null, "/" + JSON.stringify(gameBoard)
+    if (winnerToken !== null && winnerToken > -1) {
+        if (typeof(window) !== 'undefined') {
+            window.history.pushState(null, null, "/" + JSON.stringify(gameBoard)
                 + "/" + 1 + "/" + winnerToken)
+        }
         return winnerToken;
     }
 
@@ -62,7 +64,6 @@ function isDraw(grid: Token[][]) {
 
 function getDiagonalToken(flippedGameBoard: Token[][], reverse = false): any {
     for (let i = 0; i < 3; i++) {
-        console.log(flippedGameBoard)
         let base = flippedGameBoard[i][0];
         let offset = [1, 2, 3];
         if (reverse) {

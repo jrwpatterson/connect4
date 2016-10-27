@@ -1,9 +1,9 @@
 import * as _ from "lodash";
 import { browserHistory } from 'react-router'
 import { GAME_OVER, GameAction, NEW_GAME,TIME_OUT_CHANGE_TURN, PLACE_TOKEN, URL_Change } from "actions/game";
-import { Store, Token } from "store/store";
+import { GameStore, Token } from "store/store";
 
-const initialState = <Store>getGameBoard()
+const initialState = <GameStore>getGameBoard()
 function getGameBoard(): any {
     let splitLocation = location.href.split("/");
     if (splitLocation[3].length > 0) {
@@ -29,13 +29,14 @@ function getGameBoard(): any {
 }
 
 
-export default function tokenReducer(state: Store = initialState, action: GameAction = null): Store {
+export default function tokenReducer(state: GameStore = initialState, action: GameAction = null): GameStore {
+    console.log(action.type)
     switch (action.type) {
         case NEW_GAME:
             window.history.pushState(null, null, "/");
             return initialState;
         case URL_Change:
-            return <Store>getGameBoard();
+            return <GameStore>getGameBoard();
         case GAME_OVER:
             return Object.assign({}, state, { winner: action.winner });
         case PLACE_TOKEN:
@@ -45,6 +46,7 @@ export default function tokenReducer(state: Store = initialState, action: GameAc
             column.splice(emptyIndex, 1, state.turn);
             gameBoardClone[action.column] = column;
          case TIME_OUT_CHANGE_TURN:
+            console.log("Turning")
             const gameBoard = gameBoardClone || _.clone(state.gameBoard);
             const turn = state.turn === Token.Yellow ? Token.Red : Token.Yellow;
             window.history.pushState(null, null, "/" + JSON.stringify(gameBoard)

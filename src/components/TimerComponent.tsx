@@ -7,22 +7,22 @@ import {Store, Token} from "store/store";
 interface ITimerProps{
         count: number;
         message: string;
+        counter: number;
         dispatch?: Dispatch<Store>;
 };
 
 class TimerComponent extends React.Component<ITimerProps, any> {
     props: ITimerProps;
+    counter;
     constructor(props: ITimerProps){
         super(props);
+        console.log("Restart")
         this.props = props;
-        setInterval(this.tick.bind(this),1000)
+        this.counter = setInterval(this.tick.bind(this),1000)
     }
-
+    
     private tick(){
-        this.props.dispatch(TimerTickAction())
-        if(this.props.count === 0){
-            this.props.dispatch(changeTurn())
-        }
+        this.props.dispatch(TimerTickAction(this.counter))
     }
 
     public render(): JSX.Element {
@@ -37,5 +37,6 @@ class TimerComponent extends React.Component<ITimerProps, any> {
 export default connect(
     (store) => ({
         count: store.timer.count,
-        message: store.timer.message
+        message: store.timer.message,
+        counter: store.timer.counter
     }))(TimerComponent);
