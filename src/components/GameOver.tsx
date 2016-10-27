@@ -69,4 +69,4 @@ const overlayStyle = {
     top: 0,
 };
 
-export default connect(store => ({ winner: store.winner }))(GameOver);
+export default connect(store => ({ winner: store.game.winner }))(GameOver);

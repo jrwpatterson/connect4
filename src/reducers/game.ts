@@ -1,6 +1,6 @@
 import * as _ from "lodash";
 import { browserHistory } from 'react-router'
-import { GAME_OVER, GameAction, NEW_GAME, PLACE_TOKEN, URL_Change } from "actions/game";
+import { GAME_OVER, GameAction, NEW_GAME,TIME_OUT_CHANGE_TURN, PLACE_TOKEN, URL_Change } from "actions/game";
 import { Store, Token } from "store/store";
 
 const initialState = <Store>getGameBoard()
@@ -28,26 +28,29 @@ function getGameBoard(): any {
     }
 }
 
-export default function tokenReducer(state: Store = initialState, action: GameAction = null): Store {
 
+export default function tokenReducer(state: Store = initialState, action: GameAction = null): Store {
     switch (action.type) {
         case NEW_GAME:
-            location.pathname = "/";
+            window.history.pushState(null, null, "/");
             return initialState;
         case URL_Change:
             return <Store>getGameBoard();
         case GAME_OVER:
             return Object.assign({}, state, { winner: action.winner });
         case PLACE_TOKEN:
-            const gameBoard = _.clone(state.gameBoard);
-            const column = _.clone(gameBoard[action.column]);
+            let gameBoardClone = _.clone(state.gameBoard);
+            const column = _.clone(gameBoardClone[action.column]);
             const emptyIndex = _.findIndex(column, c => c === Token.Empty);
             column.splice(emptyIndex, 1, state.turn);
-            gameBoard[action.column] = column;
+            gameBoardClone[action.column] = column;
+         case TIME_OUT_CHANGE_TURN:
+            const gameBoard = gameBoardClone || _.clone(state.gameBoard);
             const turn = state.turn === Token.Yellow ? Token.Red : Token.Yellow;
             window.history.pushState(null, null, "/" + JSON.stringify(gameBoard)
-                + "/" + turn)
-            return Object.assign({}, state, { gameBoard, turn });
+                 + "/" + turn)
+            if(gameBoardClone) return Object.assign({}, state, { gameBoard , turn });
+            return Object.assign({}, state, { turn });
         default:
             return state;
     }

@@ -15,11 +15,9 @@ import {
     IMemRowObj,
 } from "store/store";
 
-
-
 function getWinner(gameBoard: Token[][]): Token {
     let winnerToken: Token = null;
-
+    console.log(gameBoard)
     const verticalWinner = _.chain(gameBoard)
         .filter(g => _.uniq(g).length === 1 && g[0] !== Token.Empty)
         .map(g => g[0])
@@ -64,6 +62,7 @@ function isDraw(grid: Token[][]) {
 
 function getDiagonalToken(flippedGameBoard: Token[][], reverse = false): any {
     for (let i = 0; i < 3; i++) {
+        console.log(flippedGameBoard)
         let base = flippedGameBoard[i][0];
         let offset = [1, 2, 3];
         if (reverse) {
@@ -104,7 +103,7 @@ function getHoriz(flippedGameBoard: Token[][]): Token {
 
 export default function* game(): any {
     while (yield take(PLACE_TOKEN)) {
-        const gameBoard = yield select < Store > (s => s.gameBoard);
+        const gameBoard = yield select < Store > (s => s.game.gameBoard);
         const winner = getWinner(gameBoard);
         if (winner !==null && winner > -1) {
             yield put(gameOver(winner));

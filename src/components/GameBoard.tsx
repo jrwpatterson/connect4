@@ -1,7 +1,7 @@
 import * as _ from "lodash";
 import * as React from "react";
 import {Dispatch, connect} from "react-redux";
-import {placeToken} from "actions/game";
+import {placeToken, newGame} from "actions/game";
 import colors from "colors";
 import {Store, Token} from "store/store";
 
@@ -26,6 +26,10 @@ const GameBoard = (props: GameBoardProps) => {
                 </div>)}
         </div>;
 
+    const newGameButton = <div>
+        <button style={buttonStyle} onClick={() => props.dispatch(newGame())}>New game?</button>
+    </div>
+
     const rows = flippedGameBoard.map(row =>
         <div style={rowStyle}>
             {row.map((token, col) =>
@@ -35,7 +39,7 @@ const GameBoard = (props: GameBoardProps) => {
                 </div>)}
         </div>);
 
-    return <div>{arrowRow}{rows}</div>;
+    return <div>{newGameButton}{arrowRow}{rows}</div>;
 };
 
 const rowStyle = {
@@ -57,4 +61,13 @@ const arrowStyle = {
     fontSize: 45,
 };
 
-export default connect(store => ({ gameBoard: store.gameBoard, turn: store.turn }))(GameBoard);
+const buttonStyle = {
+    backgroundColor: "#0af",
+    borderRadius: 6,
+    borderStyle: "none",
+    color: "white",
+    cursor: "pointer",
+    padding: "10px 20px",
+};
+
+export default connect(store => ({ gameBoard: store.game.gameBoard, turn: store.game.turn }))(GameBoard);

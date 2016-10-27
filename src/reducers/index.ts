@@ -1,3 +1,6 @@
-import game from "./game";
+import {combineReducers} from "redux"
 
-export default game;
+import game from "./game";
+import timer from "./timer";
+
+export default combineReducers({game, timer});

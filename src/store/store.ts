@@ -5,6 +5,7 @@ export enum Token {
 }
 
 export interface Store {
+    game?: any;
     gameBoard: Token[][];
     turn: Token;
     winner?: Token;
