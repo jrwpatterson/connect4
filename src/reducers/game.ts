@@ -30,7 +30,6 @@ function getGameBoard(): any {
 
 
 export default function tokenReducer(state: GameStore = initialState, action: GameAction = null): GameStore {
-    console.log(action.type)
     switch (action.type) {
         case NEW_GAME:
             window.history.pushState(null, null, "/");
