@@ -48,7 +48,7 @@ export default function tokenReducer(state: GameStore = initialState, action: Ga
             console.log("Turning")
             const gameBoard = gameBoardClone || _.clone(state.gameBoard);
             const turn = state.turn === Token.Yellow ? Token.Red : Token.Yellow;
-            window.history.pushState(null, null, "/" + JSON.stringify(gameBoard)
+            window.history.pushState(state, null, "/" + JSON.stringify(gameBoard)
                  + "/" + turn)
             if(gameBoardClone) return Object.assign({}, state, { gameBoard , turn });
             return Object.assign({}, state, { turn });
